@@ -101,7 +101,7 @@
       .map(
         (p, i) => `
         <article class="program reveal" style="--delay:${i * 80}ms">
-          <div class="program__media">${img(p.image, [400, 600, 800, 1000], "(min-width: 1240px) 290px, (min-width: 600px) 50vw, 100vw", p.imageAlt || p.title, 600, 840)}</div>
+          <div class="program__media media">${img(p.image, [400, 600, 800, 1000], "(min-width: 1240px) 290px, (min-width: 600px) 50vw, 100vw", p.imageAlt || p.title, 600, 840)}</div>
           <div class="program__body">
             <span class="program__icon">${ICONS[p.icon] || ""}</span>
             <h3>${esc(p.title)}</h3>
@@ -120,6 +120,7 @@
         const billed = annual ? `Billed ${currency}${p.annual * 12} yearly` : "Billed monthly";
         return `
         <article class="plan reveal${p.featured ? " plan--featured" : ""}" style="--delay:${i * 80}ms">
+          ${p.image ? `<div class="plan__media media">${img(p.image, [400, 600, 800], "(min-width: 1240px) 380px, (min-width: 900px) 33vw, 100vw", p.imageAlt || p.name, 800, 450)}</div>` : ""}
           ${p.badge ? `<span class="plan__badge">${esc(p.badge)}</span>` : ""}
           <h3 class="plan__name">${esc(p.name)}</h3>
           <p class="plan__desc">${esc(p.description)}</p>
@@ -156,7 +157,7 @@
       .map(
         (t, i) => `
         <article class="trainer reveal" style="--delay:${i * 80}ms">
-          <div class="trainer__media">
+          <div class="trainer__media media">
             ${img(t.image, [360, 540, 720], "(min-width: 1240px) 290px, (min-width: 560px) 50vw, 100vw", `Portrait of ${t.name}`, 540, 675)}
             <a class="trainer__social" href="${esc(t.instagram)}" aria-label="${esc(t.name)} on Instagram">${ICONS.instagram}</a>
           </div>
@@ -178,7 +179,10 @@
           <span class="testimonial__icon">${ICONS.quote}</span>
           <div class="testimonial__stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
           <blockquote>${esc(t.quote)}</blockquote>
-          <figcaption><strong>${esc(t.name)}</strong><span>${esc(t.detail)}</span></figcaption>
+          <figcaption>
+            ${t.avatar ? `<span class="testimonial__avatar media"><img src="${esc(t.avatar)}" alt="" width="56" height="56" loading="lazy" decoding="async"></span>` : ""}
+            <span class="testimonial__who"><strong>${esc(t.name)}</strong><span>${esc(t.detail)}</span></span>
+          </figcaption>
         </figure>`
       )
       .join("");
@@ -207,6 +211,12 @@
       return `${String(Math.floor(total / 60) % 24).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
     };
 
+    // Each class row shows its coach's photo, matched by name from the trainers list.
+    const coachPhoto = (name) => {
+      const t = cfg.trainers.find((x) => x.name === name);
+      return t ? `<span class="class-row__coach-photo media">${img(t.image, [120], "56px", "", 56, 56)}</span>` : "";
+    };
+
     const calm = matchMedia("(prefers-reduced-motion: reduce)");
     const select = (day, focus, animate = true) => {
       $$("[role=tab]", tabs).forEach((b) => {
@@ -223,6 +233,7 @@
               (c) => `
             <li class="class-row">
               <span class="class-row__time">${ICONS.clock}${esc(c.time)}<small>– ${endTime(c.time, c.duration)}</small></span>
+              ${coachPhoto(c.coach)}
               <span class="class-row__name">${esc(c.name)}</span>
               <span class="class-row__coach">with ${esc(c.coach)}</span>
               <a href="#trial" class="btn btn--outline btn--sm">Book</a>
@@ -264,6 +275,8 @@
     $("#contact-phone").href = `tel:${c.phone.replace(/[^\d+]/g, "")}`;
     $("#contact-email").href = `mailto:${c.email}`;
     $("#hours").innerHTML = c.hours.map((h) => `<div><dt>${esc(h.days)}</dt><dd>${esc(h.time)}</dd></div>`).join("");
+    if (c.image) $("#contact-photo").innerHTML = img(c.image, [600, 900, 1200], "(min-width: 960px) 55vw, 100vw", c.imageAlt || "", 1200, 600);
+    if (cfg.trial && cfg.trial.image) $("#trial-bg").innerHTML = img(cfg.trial.image, [800, 1200, 1600], "100vw", "", 1600, 1067);
     $("#map").src = `https://maps.google.com/maps?q=${encodeURIComponent(c.mapQuery || c.address)}&z=15&output=embed`;
     $("#social").innerHTML = Object.entries(c.social)
       .map(([k, url]) => `<a href="${esc(url)}" aria-label="${esc(SOCIAL_LABELS[k] || k)}">${ICONS[k] || ""}</a>`)
@@ -404,6 +417,17 @@
     });
   }
 
+  /* ---------- Missing photos ---------- */
+  // If a photo can't load (bad link, blocked host), hide it so its frame shows the
+  // branded placeholder instead of a broken-image icon.
+  const hideBroken = (el) => {
+    if (el.tagName !== "IMG") return;
+    el.hidden = true;
+    el.closest(".media")?.classList.add("media--empty");
+  };
+  document.addEventListener("error", (e) => hideBroken(e.target), true);
+  const sweepBroken = () => $$("img").forEach((el) => el.complete && el.currentSrc && !el.naturalWidth && hideBroken(el));
+
   /* ---------- Boot ---------- */
   applyBindings();
   renderStructuredData();
@@ -417,4 +441,6 @@
   initNav();
   initForm();
   initReveal();
+  sweepBroken();
+  window.addEventListener("load", sweepBroken);
 })();

@@ -58,7 +58,7 @@
   <main id="main">
     <!-- ============ HERO ============ -->
     <section class="hero" id="top">
-      <div class="hero__bg" aria-hidden="true">
+      <div class="hero__bg media" aria-hidden="true">
         <!-- In the HTML (not set by JS) so the browser starts fetching the hero photo immediately. -->
         <img id="hero-img" alt="" width="2000" height="1333" fetchpriority="high" decoding="async"
           data-src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&amp;fit=crop&amp;q=70"
@@ -156,6 +156,7 @@
 
     <!-- ============ TRIAL CTA / FORM ============ -->
     <section class="section trial" id="trial">
+      <div class="trial__bg media" id="trial-bg" aria-hidden="true"></div>
       <div class="container trial__inner">
         <div class="trial__copy reveal">
           <p class="eyebrow">Free 7-day pass</p>
@@ -232,8 +233,11 @@
           <h3 class="contact__subtitle">Opening hours</h3>
           <dl class="hours" id="hours"></dl>
         </div>
-        <div class="contact__map reveal">
-          <iframe id="map" title="Map showing the gym location" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="contact__visual reveal">
+          <div class="contact__photo media" id="contact-photo"></div>
+          <div class="contact__map">
+            <iframe id="map" title="Map showing the gym location" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
         </div>
       </div>
     </section>

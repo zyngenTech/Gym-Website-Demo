@@ -6,11 +6,26 @@
   <title>Forge Athletic Club | Strength, Conditioning & Community</title>
   <meta name="description" content="Coach-led classes, serious equipment and a community that keeps you showing up. Book your free trial today.">
   <meta name="theme-color" content="#0b0b0d">
+
+  <!-- Social sharing previews (Facebook, WhatsApp, LinkedIn, X). Add og:url once the site has its domain. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Forge Athletic Club">
+  <meta property="og:title" content="Forge Athletic Club | Strength, Conditioning & Community">
+  <meta property="og:description" content="Coach-led classes, serious equipment and a community that keeps you showing up. Book your free trial today.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&amp;fit=crop&amp;w=1200&amp;h=630&amp;q=70">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Training floor at Forge Athletic Club">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preload" href="assets/fonts/barlow-condensed-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter-latin-var.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/styles.css">
+  <script src="js/config.js" defer></script>
+  <script src="js/main.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -18,7 +33,7 @@
   <!-- ============ NAV ============ -->
   <header class="nav" id="nav">
     <div class="container nav__inner">
-      <a href="#top" class="logo" aria-label="Home">
+      <a href="#top" class="logo">
         <span class="logo__mark" aria-hidden="true"></span>
         <span class="logo__text"><strong data-bind="brand.name">Forge</strong> <span data-bind="brand.suffix">Athletic Club</span></span>
       </a>
@@ -43,16 +58,27 @@
   <main id="main">
     <!-- ============ HERO ============ -->
     <section class="hero" id="top">
-      <div class="hero__bg" id="hero-bg" aria-hidden="true"></div>
+      <div class="hero__bg" aria-hidden="true">
+        <!-- In the HTML (not set by JS) so the browser starts fetching the hero photo immediately. -->
+        <img id="hero-img" alt="" width="2000" height="1333" fetchpriority="high" decoding="async"
+          data-src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&amp;fit=crop&amp;q=70"
+          src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&amp;fit=crop&amp;q=70&amp;w=1600"
+          srcset="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&amp;fit=crop&amp;q=70&amp;w=640 640w, https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&amp;fit=crop&amp;q=70&amp;w=960 960w, https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&amp;fit=crop&amp;q=70&amp;w=1280 1280w, https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&amp;fit=crop&amp;q=70&amp;w=1600 1600w, https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&amp;fit=crop&amp;q=70&amp;w=2000 2000w"
+          sizes="100vw">
+      </div>
       <div class="container hero__content">
-        <p class="eyebrow reveal" data-bind="hero.eyebrow">Strength · Conditioning · Community</p>
-        <h1 class="hero__title reveal" data-bind-html="hero.title">Train like you<br>mean it.</h1>
-        <p class="hero__subtitle reveal" data-bind="hero.subtitle"></p>
-        <div class="hero__actions reveal">
+        <p class="eyebrow hero__in" data-bind="hero.eyebrow">Strength · Conditioning · Community</p>
+        <h1 class="hero__title hero__in" data-bind-html="hero.title">Train like you<br>mean it.</h1>
+        <p class="hero__subtitle hero__in" data-bind="hero.subtitle">Coach-led classes, serious equipment and a crew that keeps you showing up. Your first week is on us.</p>
+        <div class="hero__actions hero__in">
           <a href="#trial" class="btn btn--primary btn--lg" data-bind="hero.primaryCta">Book a free trial</a>
           <a href="#schedule" class="btn btn--ghost btn--lg" data-bind="hero.secondaryCta">View classes</a>
         </div>
-        <ul class="hero__stats reveal" id="hero-stats"></ul>
+        <ul class="hero__stats hero__in" id="hero-stats">
+          <li><strong>2,400+</strong><span>Active members</span></li>
+          <li><strong>60+</strong><span>Classes a week</span></li>
+          <li><strong>24/7</strong><span>Member access</span></li>
+        </ul>
       </div>
       <a href="#programs" class="hero__scroll" aria-label="Scroll to programs"><span></span></a>
     </section>
@@ -216,7 +242,7 @@
   <!-- ============ FOOTER ============ -->
   <footer class="footer">
     <div class="container footer__inner">
-      <a href="#top" class="logo" aria-label="Back to top">
+      <a href="#top" class="logo">
         <span class="logo__mark" aria-hidden="true"></span>
         <span class="logo__text"><strong data-bind="brand.name">Forge</strong> <span data-bind="brand.suffix">Athletic Club</span></span>
       </a>
@@ -226,7 +252,5 @@
     </div>
   </footer>
 
-  <script src="js/config.js"></script>
-  <script src="js/main.js"></script>
 </body>
 </html>

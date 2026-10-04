@@ -24,6 +24,12 @@
   --accent-soft: color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
+/* ---------- Fonts (self-hosted latin subsets, SIL OFL: see assets/fonts) ---------- */
+@font-face { font-family: "Barlow Condensed"; font-weight: 600; font-display: swap; src: url("../assets/fonts/barlow-condensed-600.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; font-display: swap; src: url("../assets/fonts/barlow-condensed-700.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 800; font-display: swap; src: url("../assets/fonts/barlow-condensed-800.woff2") format("woff2"); }
+@font-face { font-family: "Inter"; font-weight: 100 900; font-display: swap; src: url("../assets/fonts/inter-latin-var.woff2") format("woff2"); }
+
 /* ---------- Reset / base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 8px); -webkit-text-size-adjust: 100%; }
@@ -159,8 +165,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   background: #1a1a1f center/cover no-repeat;
   transform: scale(1.08); animation: heroZoom 14s var(--ease) forwards;
 }
+.hero__bg img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .hero__bg::after {
-  content: ""; position: absolute; inset: 0;
+  content: ""; position: absolute; inset: 0; z-index: 1;
   background:
     linear-gradient(90deg, rgba(11,11,13,.95) 0%, rgba(11,11,13,.7) 45%, rgba(11,11,13,.35) 100%),
     linear-gradient(0deg, var(--bg) 0%, transparent 35%);
@@ -316,7 +323,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 .schedule__tabs [role="tab"][aria-selected="true"] { color: var(--accent-ink); background: var(--accent); }
 .schedule__today { font: 600 .62rem/1 var(--font-body); letter-spacing: .1em; opacity: .8; }
 .schedule__panel { padding: .5rem 1.5rem; outline: none; }
-.schedule__panel.is-swapping { animation: fadeUp .45s var(--ease); }
 .class-row {
   display: grid; grid-template-columns: 170px 1fr auto auto; align-items: center; gap: 1.5rem;
   padding: 1.25rem 0; border-bottom: 1px solid var(--border);
@@ -410,15 +416,21 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .footer__social a:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
 .footer__social svg { width: 20px; height: 20px; }
-.footer__copy { font-size: .82rem; color: #71717a; }
+.footer__copy { font-size: .82rem; color: var(--text-muted); }
 
 /* ---------- Scroll reveal ---------- */
 .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--delay, 0ms); }
 .reveal.is-visible { opacity: 1; transform: none; }
-.hero .reveal:nth-child(2) { --delay: 80ms; }
-.hero .reveal:nth-child(3) { --delay: 160ms; }
-.hero .reveal:nth-child(4) { --delay: 240ms; }
-.hero .reveal:nth-child(5) { --delay: 320ms; }
+/* Hero copy animates in with CSS on first paint (no wait for JS), and the
+   headline only slides, never starts invisible, so it paints immediately. */
+.hero__in { animation: heroIn .9s var(--ease) both; animation-delay: var(--delay, 0ms); }
+.hero__title.hero__in { animation-name: heroRise; }
+.hero__in:nth-child(2) { --delay: 80ms; }
+.hero__in:nth-child(3) { --delay: 160ms; }
+.hero__in:nth-child(4) { --delay: 240ms; }
+.hero__in:nth-child(5) { --delay: 320ms; }
+@keyframes heroIn { from { opacity: 0; transform: translateY(28px); } }
+@keyframes heroRise { from { transform: translateY(28px); } }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
 /* ---------- Responsive ---------- */

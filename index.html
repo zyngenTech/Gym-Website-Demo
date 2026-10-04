@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forge Athletic Club | Strength, Conditioning & Community</title>
+  <meta name="description" content="Coach-led classes, serious equipment and a community that keeps you showing up. Book your free trial today.">
+  <meta name="theme-color" content="#0b0b0d">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav" id="nav">
+    <div class="container nav__inner">
+      <a href="#top" class="logo" aria-label="Home">
+        <span class="logo__mark" aria-hidden="true"></span>
+        <span class="logo__text"><strong data-bind="brand.name">Forge</strong> <span data-bind="brand.suffix">Athletic Club</span></span>
+      </a>
+
+      <nav class="nav__menu" id="nav-menu" aria-label="Primary">
+        <ul class="nav__links">
+          <li><a href="#programs">Programs</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#trainers">Trainers</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="#trial" class="btn btn--primary nav__cta">Free trial</a>
+      </nav>
+
+      <button class="nav__toggle" id="nav-toggle" aria-controls="nav-menu" aria-expanded="false" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <div class="hero__bg" id="hero-bg" aria-hidden="true"></div>
+      <div class="container hero__content">
+        <p class="eyebrow reveal" data-bind="hero.eyebrow">Strength · Conditioning · Community</p>
+        <h1 class="hero__title reveal" data-bind-html="hero.title">Train like you<br>mean it.</h1>
+        <p class="hero__subtitle reveal" data-bind="hero.subtitle"></p>
+        <div class="hero__actions reveal">
+          <a href="#trial" class="btn btn--primary btn--lg" data-bind="hero.primaryCta">Book a free trial</a>
+          <a href="#schedule" class="btn btn--ghost btn--lg" data-bind="hero.secondaryCta">View classes</a>
+        </div>
+        <ul class="hero__stats reveal" id="hero-stats"></ul>
+      </div>
+      <a href="#programs" class="hero__scroll" aria-label="Scroll to programs"><span></span></a>
+    </section>
+
+    <!-- ============ PROGRAMS ============ -->
+    <section class="section" id="programs">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">What we offer</p>
+          <h2 class="section__title">Programs built for results</h2>
+          <p class="section__lead">Whatever your goal, there's a coach and a class designed to get you there.</p>
+        </header>
+        <div class="programs" id="programs-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ PRICING ============ -->
+    <section class="section section--alt" id="pricing">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">Membership</p>
+          <h2 class="section__title">Simple, honest pricing</h2>
+          <p class="section__lead">No joining fee. No long contracts. Cancel any time.</p>
+        </header>
+
+        <div class="billing-toggle reveal" role="group" aria-label="Billing period">
+          <span class="billing-toggle__label" id="label-monthly">Monthly</span>
+          <button class="switch" id="billing-switch" role="switch" aria-checked="false" aria-labelledby="label-annual">
+            <span class="switch__thumb"></span>
+          </button>
+          <span class="billing-toggle__label" id="label-annual">Annual <em class="billing-toggle__save" id="annual-note"></em></span>
+        </div>
+
+        <div class="pricing" id="pricing-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ TRAINERS ============ -->
+    <section class="section" id="trainers">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">The team</p>
+          <h2 class="section__title">Coaches who care</h2>
+          <p class="section__lead">Certified, experienced and genuinely invested in your progress.</p>
+        </header>
+        <div class="trainers" id="trainers-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ TESTIMONIALS ============ -->
+    <section class="section section--alt" id="testimonials">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">Member stories</p>
+          <h2 class="section__title">Don't take our word for it</h2>
+        </header>
+        <div class="testimonials" id="testimonials-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============ SCHEDULE ============ -->
+    <section class="section" id="schedule">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="eyebrow">Timetable</p>
+          <h2 class="section__title">Class schedule</h2>
+          <p class="section__lead">Pick a day to see what's on. Classes are included in Performance and Elite plans.</p>
+        </header>
+        <div class="schedule reveal">
+          <div class="schedule__tabs" role="tablist" aria-label="Day of the week" id="schedule-tabs"></div>
+          <div class="schedule__panel" role="tabpanel" id="schedule-panel" tabindex="0"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TRIAL CTA / FORM ============ -->
+    <section class="section trial" id="trial">
+      <div class="container trial__inner">
+        <div class="trial__copy reveal">
+          <p class="eyebrow">Free 7-day pass</p>
+          <h2 class="section__title">Your first week is on us</h2>
+          <p class="section__lead">Try any class, meet the coaches and use the full facility. No card, no commitment.</p>
+          <ul class="checklist">
+            <li>Unlimited classes for 7 days</li>
+            <li>Free 1:1 fitness assessment</li>
+            <li>No credit card required</li>
+          </ul>
+        </div>
+
+        <form class="form reveal" id="trial-form" novalidate>
+          <div class="form__row">
+            <div class="field">
+              <label for="f-name">Full name</label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required minlength="2" placeholder="Alex Morgan">
+              <p class="field__error" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" required pattern="[\d\s\+\(\)\-]{7,20}" placeholder="(555) 123-4567">
+              <p class="field__error" aria-live="polite"></p>
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-email">Email</label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+            <p class="field__error" aria-live="polite"></p>
+          </div>
+          <div class="form__row">
+            <div class="field">
+              <label for="f-goal">Main goal</label>
+              <select id="f-goal" name="goal" required>
+                <option value="" disabled selected>Choose one</option>
+                <option>Build strength</option>
+                <option>Lose weight</option>
+                <option>Improve fitness</option>
+                <option>Learn boxing</option>
+                <option>Mobility & recovery</option>
+              </select>
+              <p class="field__error" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="f-date">Preferred start date</label>
+              <input id="f-date" name="date" type="date" required>
+              <p class="field__error" aria-live="polite"></p>
+            </div>
+          </div>
+          <label class="consent">
+            <input type="checkbox" name="consent" required>
+            <span>I agree to be contacted about my free trial.</span>
+          </label>
+          <button type="submit" class="btn btn--primary btn--lg btn--block">Claim my free week</button>
+          <div class="form__success" id="form-success" role="status" hidden>
+            <strong>You're in!</strong>
+            <span id="form-success-text">We'll be in touch within 24 hours to confirm your first session.</span>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section section--alt" id="contact">
+      <div class="container contact">
+        <div class="contact__info reveal">
+          <p class="eyebrow">Visit us</p>
+          <h2 class="section__title">Find the gym</h2>
+          <ul class="contact__list">
+            <li><span class="contact__icon" data-icon="pin"></span><span data-bind="contact.address"></span></li>
+            <li><span class="contact__icon" data-icon="phone"></span><a id="contact-phone" data-bind="contact.phone"></a></li>
+            <li><span class="contact__icon" data-icon="mail"></span><a id="contact-email" data-bind="contact.email"></a></li>
+          </ul>
+          <h3 class="contact__subtitle">Opening hours</h3>
+          <dl class="hours" id="hours"></dl>
+        </div>
+        <div class="contact__map reveal">
+          <iframe id="map" title="Map showing the gym location" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <a href="#top" class="logo" aria-label="Back to top">
+        <span class="logo__mark" aria-hidden="true"></span>
+        <span class="logo__text"><strong data-bind="brand.name">Forge</strong> <span data-bind="brand.suffix">Athletic Club</span></span>
+      </a>
+      <p class="footer__tagline" data-bind="brand.tagline"></p>
+      <div class="footer__social" id="social"></div>
+      <p class="footer__copy">&copy; <span id="year"></span> <span data-bind="brand.name"></span> <span data-bind="brand.suffix"></span>. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

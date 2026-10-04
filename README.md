@@ -17,9 +17,10 @@ Deploys as-is to GitHub Pages, Netlify, Vercel or any static host.
 
 1. **Copy, prices, schedule, trainers, contact:** edit `js/config.js`. Every section renders from this file.
 2. **Colours and fonts:** edit the variables at the top of `css/styles.css` (`--accent`, `--bg`, `--font-display`, ...). You can also set `brand.accent` in the config to override just the accent.
-3. **Images:** replace the image URLs in `js/config.js` with the gym's own photos.
-4. **Logo / favicon:** swap `assets/favicon.svg` and the `.logo__mark` shape in the CSS.
-5. **Trial form:** it validates in the browser and shows a success message. To receive leads, replace the marked block in `initForm()` in `js/main.js` with a `fetch()` to Formspree, Netlify Forms or the gym's CRM.
+3. **Images:** replace the image URLs in `js/config.js` with the gym's own photos, and the program `imageAlt` text to describe them. For the fastest first paint, also paste the hero photo into the `<img id="hero-img">` in `index.html`. Unsplash URLs get responsive sizes automatically; for your own photos, export them at about 2000px wide (hero) and 1000px (cards) as WebP or JPEG.
+4. **Sharing previews and search:** update the `og:` meta tags at the top of `index.html` (title, description, image) and add `<meta property="og:url">` once the site has its domain. Google's local business data is generated from `js/config.js`.
+5. **Logo / favicon:** swap `assets/favicon.svg` and the `.logo__mark` shape in the CSS.
+6. **Trial form:** it validates in the browser and shows a success message. To receive leads, replace the marked block in `initForm()` in `js/main.js` with a `fetch()` to Formspree, Netlify Forms or the gym's CRM.
 
 ## What's included
 
@@ -30,5 +31,6 @@ Deploys as-is to GitHub Pages, Netlify, Vercel or any static host.
 - Contact section with embedded map and opening hours
 - Sticky blurred nav with mobile menu, scroll-spy and scroll-reveal animations
 - Respects `prefers-reduced-motion`; skip link and ARIA for tabs, switch and menu
+- Lighthouse 90+ in every category on mobile and desktop: self-hosted fonts, deferred scripts, responsive lazy-loaded images, Open Graph tags and `ExerciseGym` structured data
 
 Placeholder photos are from [Unsplash](https://unsplash.com).

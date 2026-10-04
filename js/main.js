@@ -8,6 +8,23 @@
   const esc = (s) =>
     String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
+  /* ---------- Responsive images ---------- */
+  // Unsplash resizes on the fly via ?w=, so build a srcset and let the browser pick
+  // the smallest file that fills the slot. Other image hosts are used as-is.
+  const isUnsplash = (url) => /^https:\/\/images\.unsplash\.com\//.test(url);
+  const resized = (url, w) => {
+    const u = new URL(url);
+    u.searchParams.set("w", w);
+    return u.href;
+  };
+  const srcset = (url, widths) => (isUnsplash(url) ? widths.map((w) => `${resized(url, w)} ${w}w`).join(", ") : "");
+  const img = (url, widths, sizes, alt, w, h) => {
+    const set = srcset(url, widths);
+    const src = isUnsplash(url) ? resized(url, widths[Math.floor(widths.length / 2)]) : url;
+    return `<img src="${esc(src)}"${set ? ` srcset="${esc(set)}" sizes="${sizes}"` : ""} alt="${esc(alt)}" width="${w}" height="${h}" loading="lazy" decoding="async">`;
+  };
+  const SOCIAL_LABELS = { instagram: "Instagram", facebook: "Facebook", tiktok: "TikTok" };
+
   /* ---------- Icons (inline SVG, stroke = currentColor) ---------- */
   const svg = (paths) =>
     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths}</svg>`;
@@ -43,10 +60,36 @@
     $$("[data-icon]").forEach((el) => (el.innerHTML = ICONS[el.dataset.icon] || ""));
 
     $("#year").textContent = new Date().getFullYear();
-    $("#hero-bg").style.backgroundImage = `url("${cfg.hero.image}")`;
+    const hero = $("#hero-img");
+    if (cfg.hero.image && cfg.hero.image !== hero.dataset.src) {
+      hero.srcset = srcset(cfg.hero.image, [640, 960, 1280, 1600, 2000]);
+      hero.src = isUnsplash(cfg.hero.image) ? resized(cfg.hero.image, 1600) : cfg.hero.image;
+    }
   }
 
   /* ---------- Section renderers ---------- */
+  /* ---------- Structured data (Google rich results for a local gym) ---------- */
+  function renderStructuredData() {
+    const c = cfg.contact;
+    const data = {
+      "@context": "https://schema.org",
+      "@type": "ExerciseGym",
+      name: `${cfg.brand.name} ${cfg.brand.suffix}`,
+      description: cfg.hero.subtitle,
+      image: isUnsplash(cfg.hero.image) ? resized(cfg.hero.image, 1200) : cfg.hero.image,
+      telephone: c.phone,
+      email: c.email,
+      address: c.address,
+      priceRange: `${cfg.pricing.currency}${Math.min(...cfg.pricing.plans.map((p) => p.annual))}-${cfg.pricing.currency}${Math.max(
+        ...cfg.pricing.plans.map((p) => p.monthly)
+      )}/mo`,
+    };
+    const el = document.createElement("script");
+    el.type = "application/ld+json";
+    el.textContent = JSON.stringify(data);
+    document.head.appendChild(el);
+  }
+
   function renderHeroStats() {
     $("#hero-stats").innerHTML = cfg.hero.stats
       .map((s) => `<li><strong>${esc(s.value)}</strong><span>${esc(s.label)}</span></li>`)
@@ -58,7 +101,7 @@
       .map(
         (p, i) => `
         <article class="program reveal" style="--delay:${i * 80}ms">
-          <div class="program__media"><img src="${esc(p.image)}" alt="" loading="lazy"></div>
+          <div class="program__media">${img(p.image, [400, 600, 800, 1000], "(min-width: 1240px) 290px, (min-width: 600px) 50vw, 100vw", p.imageAlt || p.title, 600, 840)}</div>
           <div class="program__body">
             <span class="program__icon">${ICONS[p.icon] || ""}</span>
             <h3>${esc(p.title)}</h3>
@@ -114,7 +157,7 @@
         (t, i) => `
         <article class="trainer reveal" style="--delay:${i * 80}ms">
           <div class="trainer__media">
-            <img src="${esc(t.image)}" alt="Portrait of ${esc(t.name)}" loading="lazy">
+            ${img(t.image, [360, 540, 720], "(min-width: 1240px) 290px, (min-width: 560px) 50vw, 100vw", `Portrait of ${t.name}`, 540, 675)}
             <a class="trainer__social" href="${esc(t.instagram)}" aria-label="${esc(t.name)} on Instagram">${ICONS.instagram}</a>
           </div>
           <div class="trainer__body">
@@ -133,7 +176,7 @@
         (t, i) => `
         <figure class="testimonial reveal" style="--delay:${i * 80}ms">
           <span class="testimonial__icon">${ICONS.quote}</span>
-          <div class="testimonial__stars" aria-label="5 out of 5 stars">★★★★★</div>
+          <div class="testimonial__stars" role="img" aria-label="5 out of 5 stars">★★★★★</div>
           <blockquote>${esc(t.quote)}</blockquote>
           <figcaption><strong>${esc(t.name)}</strong><span>${esc(t.detail)}</span></figcaption>
         </figure>`
@@ -164,7 +207,8 @@
       return `${String(Math.floor(total / 60) % 24).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
     };
 
-    const select = (day, focus) => {
+    const calm = matchMedia("(prefers-reduced-motion: reduce)");
+    const select = (day, focus, animate = true) => {
       $$("[role=tab]", tabs).forEach((b) => {
         const on = b.dataset.day === day;
         b.setAttribute("aria-selected", String(on));
@@ -186,9 +230,12 @@
             )
             .join("")}</ul>`
         : `<p class="classes__empty">No classes scheduled. Open gym all day.</p>`;
-      panel.classList.remove("is-swapping");
-      void panel.offsetWidth; // restart animation
-      panel.classList.add("is-swapping");
+      if (animate && !calm.matches && panel.animate) {
+        panel.animate(
+          [{ opacity: 0, transform: "translateY(10px)" }, { opacity: 1, transform: "none" }],
+          { duration: 450, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+        );
+      }
     };
 
     tabs.addEventListener("click", (e) => {
@@ -208,7 +255,7 @@
         select(days[next], true);
       }
     });
-    select(today);
+    select(today, false, false);
   }
 
   /* ---------- Contact ---------- */
@@ -219,7 +266,7 @@
     $("#hours").innerHTML = c.hours.map((h) => `<div><dt>${esc(h.days)}</dt><dd>${esc(h.time)}</dd></div>`).join("");
     $("#map").src = `https://maps.google.com/maps?q=${encodeURIComponent(c.mapQuery || c.address)}&z=15&output=embed`;
     $("#social").innerHTML = Object.entries(c.social)
-      .map(([k, url]) => `<a href="${esc(url)}" aria-label="${esc(k)}">${ICONS[k] || ""}</a>`)
+      .map(([k, url]) => `<a href="${esc(url)}" aria-label="${esc(SOCIAL_LABELS[k] || k)}">${ICONS[k] || ""}</a>`)
       .join("");
   }
 
@@ -230,7 +277,7 @@
     const menu = $("#nav-menu");
 
     const onScroll = () => nav.classList.toggle("is-scrolled", window.scrollY > 24);
-    onScroll();
+    requestAnimationFrame(onScroll); // after first layout, so reading scrollY doesn't force a reflow
     window.addEventListener("scroll", onScroll, { passive: true });
 
     const setOpen = (open) => {
@@ -359,6 +406,7 @@
 
   /* ---------- Boot ---------- */
   applyBindings();
+  renderStructuredData();
   renderHeroStats();
   renderPrograms();
   initPricingToggle();

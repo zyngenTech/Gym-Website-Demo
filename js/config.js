@@ -22,8 +22,9 @@ window.SITE_CONFIG = {
       "Coach-led classes, serious equipment and a crew that keeps you showing up. Your first week is on us.",
     primaryCta: "Book a free trial",
     secondaryCta: "View classes",
-    image:
-      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2000&q=70",
+    // Hero photo. For the fastest first paint, also paste it into the <img id="hero-img">
+    // in index.html (the site still works if you only change it here).
+    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=70",
     stats: [
       { value: "2,400+", label: "Active members" },
       { value: "60+", label: "Classes a week" },
@@ -35,6 +36,7 @@ window.SITE_CONFIG = {
     {
       icon: "dumbbell",
       title: "Strength & Power",
+      imageAlt: "Members training in a Strength & Power class",
       text: "Barbell-focused programming that builds real, measurable strength week over week.",
       image:
         "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=900&q=70",
@@ -42,6 +44,7 @@ window.SITE_CONFIG = {
     {
       icon: "flame",
       title: "HIIT Conditioning",
+      imageAlt: "Members working hard in a HIIT Conditioning class",
       text: "45 minutes of intervals that torch calories and push your engine further.",
       image:
         "https://images.unsplash.com/photo-1599058917212-d750089bc07e?auto=format&fit=crop&w=900&q=70",
@@ -49,6 +52,7 @@ window.SITE_CONFIG = {
     {
       icon: "glove",
       title: "Boxing",
+      imageAlt: "Member training in a Boxing class",
       text: "Pad work, footwork and bag rounds. Learn real technique while getting fit.",
       image:
         "https://images.unsplash.com/photo-1549719386-74dfcbf7dbed?auto=format&fit=crop&w=900&q=70",
@@ -56,6 +60,7 @@ window.SITE_CONFIG = {
     {
       icon: "lotus",
       title: "Mobility & Yoga",
+      imageAlt: "Member stretching in a Mobility & Yoga class",
       text: "Recover better, move freely and keep your body ready for everything else.",
       image:
         "https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=900&q=70",

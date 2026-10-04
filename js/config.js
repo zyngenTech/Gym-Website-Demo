@@ -78,6 +78,8 @@ window.SITE_CONFIG = {
         description: "Everything you need to train on your own terms.",
         features: ["24/7 gym floor access", "Locker rooms & showers", "Free fitness assessment", "Member app"],
         cta: "Start Essential",
+        image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=70",
+        imageAlt: "Member training with dumbbells",
       },
       {
         name: "Performance",
@@ -93,6 +95,8 @@ window.SITE_CONFIG = {
           "2 guest passes / month",
         ],
         cta: "Start Performance",
+        image: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=800&q=70",
+        imageAlt: "Member lifting in the strength area",
       },
       {
         name: "Elite",
@@ -106,6 +110,8 @@ window.SITE_CONFIG = {
           "Recovery suite & sauna",
         ],
         cta: "Start Elite",
+        image: "https://images.unsplash.com/photo-1540497077202-7c8a3999166f?auto=format&fit=crop&w=800&q=70",
+        imageAlt: "Rows of equipment on the gym floor",
       },
     ],
   },
@@ -151,18 +157,21 @@ window.SITE_CONFIG = {
         "I've joined a lot of gyms. This is the first one I've stuck with for more than three months. The coaches actually know your name.",
       name: "Jordan M.",
       detail: "Member since 2022",
+      avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&crop=faces&w=160&h=160&q=70",
     },
     {
       quote:
         "Down 14 kg and deadlifting double what I could when I started. The Performance plan paid for itself.",
       name: "Priya S.",
       detail: "Performance member",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&crop=faces&w=160&h=160&q=70",
     },
     {
       quote:
         "The boxing classes are the highlight of my week. Great energy, clean facility, zero ego.",
       name: "Chris T.",
       detail: "Boxing regular",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2e?auto=format&fit=crop&crop=faces&w=160&h=160&q=70",
     },
   ],
 
@@ -207,12 +216,20 @@ window.SITE_CONFIG = {
     ],
   },
 
+  // Background photo behind the free-trial form.
+  trial: {
+    image: "https://images.unsplash.com/photo-1517963879433-6ad2b056d712?auto=format&fit=crop&w=1600&q=70",
+  },
+
   contact: {
     address: "128 Foundry Lane, Brooklyn, NY 11201",
     phone: "+1 (555) 014-2290",
     email: "hello@forgeathletic.club",
     // Used for the embedded Google Map (no API key needed).
     mapQuery: "Brooklyn Bridge Park, Brooklyn, NY",
+    // Photo of the gym shown above the map.
+    image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&w=1200&q=70",
+    imageAlt: "Inside the Forge Athletic Club training floor",
     hours: [
       { days: "Monday – Friday", time: "5:00 AM – 11:00 PM" },
       { days: "Saturday", time: "7:00 AM – 9:00 PM" },
